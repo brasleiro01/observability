@@ -11,43 +11,45 @@ spec:
     targetRevision: 0.122.3
     helm:
       values: |
-        mode: deployment
-        image:
-          repository: otel/opentelemetry-collector-k8s
-          tag: 0.123.0
-        config:
-          receivers:
-            otlp:
-              protocols:
-                grpc:
-                  endpoint: 0.0.0.0:4317
-                http:
-                  endpoint: 0.0.0.0:4318
-        
-          processors:
-            batch:
-             timeout: 10s
-             send_batch_size: 1024
-        
-          exporters:
-            logging:
-              loglevel: debug
-            otlp:
-             endpoint: grafana-tempo:4317
-             tls:
-              insecure: true
-        
-          service:
-            pipelines:
-              traces:
-               receivers: [otlp]
-               processors: [batch]
-               exporters: [debug, otlp]
-        
-        resources:
-          limits:
-            cpu: 250m
-            memory: 512Mi
+helm:
+  values: |
+    mode: deployment
+    image:
+      repository: otel/opentelemetry-collector-k8s
+      tag: 0.123.0
+    config:
+      receivers:
+        otlp:
+          protocols:
+            grpc:
+              endpoint: 0.0.0.0:4317
+            http:
+              endpoint: 0.0.0.0:4318
+
+      processors:
+        batch:
+          timeout: 10s
+          send_batch_size: 1024
+
+      exporters:
+        debug: {}
+        otlp:
+          endpoint: grafana-tempo:4317
+          tls:
+            insecure: true
+
+      service:
+        pipelines:
+          traces:
+            receivers: [otlp]
+            processors: [batch]
+            exporters: [debug, otlp]
+
+    resources:
+      limits:
+        cpu: 250m
+        memory: 512Mi
+
     
   destination:
     server: https://kubernetes.default.svc
