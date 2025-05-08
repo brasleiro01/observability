@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://grafana.github.io/helm-charts
     targetRevision: HEAD
-    path: apps/grafana
+    path: app/grafana
     helm:
       valueFiles:
         - values.yaml
