@@ -7,8 +7,9 @@ spec:
   project: default
   source:
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
-    targetRevision: HEAD
-    path: apps/otel-collector
+    chart: opentelemetry-collector
+    targetRevision: 0.88.4
+    path: app/otel-collector
     helm:
       valueFiles:
         - values.yaml
